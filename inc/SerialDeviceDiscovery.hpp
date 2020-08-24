@@ -1,7 +1,7 @@
 #pragma once
 
-#include "SerialDevice.hpp"
 #include "MixedDataType.hpp"
+#include "SerialDevice.hpp"
 
 namespace rw
 {
@@ -21,6 +21,7 @@ namespace rw
             std::vector<deviceList> getDeviceList();
             void update();
             void sendPacket(kSudCommandType cmd);
+            void delay_ms(unsigned long milliseconds);
 
           protected:
             bool getDeviceInfo();

@@ -28,6 +28,7 @@ namespace rw
             bool isError() const;
             bool isFound() const;
             bool isOpen() const;
+            void delay_ms(unsigned long milliseconds);
 
           protected:
             bool findDevice(uint16_t classID, uint16_t typeID, uint32_t serialNum, uint32_t baudRate);

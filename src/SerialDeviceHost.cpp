@@ -117,14 +117,14 @@ namespace rw
         {
             data_.clear();
             has_device_info_ = false;
+            sendPacket(SD_COMMAND_STOP_DATA);
+            serial_device_->flushInput();
+            delay_ms(100);
+            serial_device_->flushInput();
             for (int x = 0; x < 4; x++)
             {
                 sendPacket(SD_COMMAND_GET_INFO);
-#ifdef _WIN32
-                Sleep(50);
-#else
-                usleep(50000);
-#endif
+                delay_ms(50);
                 update();
                 if (has_device_info_)
                     return true;
@@ -291,6 +291,15 @@ namespace rw
             out_packet_.at(out_packet_.size() - 3) = calcCRC16 >> 8;
             out_packet_.at(out_packet_.size() - 2) = calcCRC16 & 0xFF;
             serial_device_->write(out_packet_);
+        }
+
+        void SerialDeviceHost::delay_ms(unsigned long milliseconds)
+        {
+            #ifdef _WIN32
+                Sleep(milliseconds);
+            #else
+                usleep(milliseconds*1000);
+            #endif
         }
 
         bool SerialDeviceHost::available() const

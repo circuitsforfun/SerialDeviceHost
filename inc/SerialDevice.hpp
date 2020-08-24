@@ -15,7 +15,7 @@
 #include <thread>
 #include <mutex>
 
-// OS Specific sleep
+// OS Specific
 #ifdef _WIN32
 #include <windows.h>
 #include <serial/impl/win.h>
@@ -33,7 +33,8 @@ namespace rw
         {
             SD_COMMAND_GET_INFO = 0x50,
             SD_COMMAND_SEND_DATA = 0x64,
-            SD_COMMAND_SEND_INFO = 0x69
+            SD_COMMAND_SEND_INFO = 0x69,
+            SD_COMMAND_STOP_DATA = 0x72
         } kSudCommandType;
 
         typedef struct deviceDescriptor

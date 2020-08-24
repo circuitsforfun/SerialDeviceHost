@@ -43,11 +43,7 @@ int main(int argc, char *argv[])
         ledState ^= 1;
         myDevice.add("sta", ledState); // Since this already exists it will just modify the value instead of adding it
         myDevice.sendPacket();
-#ifdef _WIN32
-        Sleep(250);
-#else
-        usleep(250000);
-#endif
+        myDevice.delay_ms(250);
         // Must call this update periodically to process SerialDeviceHost routines
         myDevice.update();
     }

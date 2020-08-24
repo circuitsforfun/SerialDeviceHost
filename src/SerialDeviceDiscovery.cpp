@@ -21,21 +21,17 @@ namespace rw
         {
             data_.clear();
             has_device_info_ = false;
+            sendPacket(SD_COMMAND_STOP_DATA);
+            serial_device_->flushInput();
+            delay_ms(100);
+            serial_device_->flushInput();
             for (int x = 0; x < 4; x++)
             {
                 serial_device_->flushInput();
                 serial_device_->flushOutput();
-#ifdef _WIN32
-                Sleep(100);
-#else
-                usleep(100000);
-#endif
+                delay_ms(100);
                 sendPacket(SD_COMMAND_GET_INFO);
-#ifdef _WIN32
-                Sleep(50);
-#else
-                usleep(50000);
-#endif
+                delay_ms(50);
                 update();
                 return has_device_info_;
             }
@@ -143,6 +139,15 @@ namespace rw
 
             serial_device_->write(out_packet_);
 
+        }
+
+        void SerialDeviceDiscovery::delay_ms(unsigned long milliseconds)
+        {
+            #ifdef _WIN32
+                Sleep(milliseconds);
+            #else
+                usleep(milliseconds*1000);
+            #endif
         }
 
         std::vector<deviceList> SerialDeviceDiscovery::getDeviceList()
